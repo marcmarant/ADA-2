@@ -1,2 +1,5 @@
-# Project exclude paths
-/out/
+# Ignorar la carpeta .idea
+.idea/
+
+# Ignorar archivos .iml
+*.iml
