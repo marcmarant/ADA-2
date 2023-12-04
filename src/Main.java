@@ -11,8 +11,10 @@ public class Main {
     public static void main(String[] args) {
         laberintos = new ArrayList<>();
         readEntry();
-        for (Laberinto laberinto: laberintos)
+        for (Laberinto laberinto : laberintos) {
             draw(laberinto);
+            System.out.println(Algoritmo.run(laberinto));
+        }
     }
 
     private static void readEntry() {
@@ -26,7 +28,7 @@ public class Main {
                 int numPuertas = Integer.parseInt(sizes[1]);
                 if (numParedes == -1 && numPuertas == -1) break;
                 int lineCount = 0;
-                int x, y, d, t, count;
+                int x, y, d, t, xCount, yCount;
                 // Se leen las paredes
                 while (lineCount < numParedes) {
                     line = br.readLine();
@@ -35,14 +37,17 @@ public class Main {
                     y = Integer.parseInt(pared[1]); // posición en Y
                     d = Integer.parseInt(pared[2]); // direccion (0 || 1)
                     t = Integer.parseInt(pared[3]); // longitud
-                    // Se generan los huecos en la matriz (Estos siempre estaran entre 1 y 199) [pero no se si comprobarlo]
-                    count = 0;
+                    // Se generan los huecos en la matriz (Estos siempre estaran entre 1 y 199)
+                    xCount = 0;
+                    yCount = 0;
                     while (laberinto.size() <= x+t) {
                         laberinto.add(new ArrayList<>());
-                        while (laberinto.get(count).size() <= y+t) {
-                            laberinto.get(count).add(new Cuadrado());
+                        while (laberinto.get(xCount).size() <= y+t) {
+                            laberinto.get(xCount).add(new Cuadrado(xCount, yCount));
+                            yCount++;
                         }
-                        count++;
+                        yCount = 0;
+                        xCount++;
                     }
                     // Se insertan las paredes
                     if (d == 0) { // La pared esta alineada con el Eje X
