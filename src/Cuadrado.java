@@ -8,12 +8,24 @@ public class Cuadrado {
     private border right;
     private border bottom;
     private border left;
+    private final int pivotX;
+    private final int pivotY;
 
-    public Cuadrado() {
+    public Cuadrado(int pivotX, int pivotY) {
+        this.pivotX = pivotX;
+        this.pivotY = pivotY;
         setTop(border.VACIO);
         setRight(border.VACIO);
         setBottom(border.VACIO);
         setLeft(border.VACIO);
+    }
+
+    public int getPivotX() {
+        return pivotX;
+    }
+
+    public  int getPivotY() {
+        return pivotY;
     }
 
     public border getTop() {
@@ -46,6 +58,10 @@ public class Cuadrado {
 
     public void setLeft(border newLeft) {
         left = newLeft;
+    }
+
+    public boolean isInRange(double x, double y) {
+        return x >= pivotX && x < pivotX + 1 && y >= pivotY && y < pivotY + 1;
     }
 
 }

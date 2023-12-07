@@ -12,7 +12,7 @@ public class Main {
         laberintos = new ArrayList<>();
         readEntry();
         for (Laberinto laberinto : laberintos) {
-            draw(laberinto);
+            // draw(laberinto);
             System.out.println(Algoritmo.run(laberinto));
         }
     }
@@ -100,7 +100,7 @@ public class Main {
         }
     }
 
-    private static void draw(Laberinto laberinto) {
+    /* private static void draw(Laberinto laberinto) {
         Cuadrado square;
         for (int i = 0; i < laberinto.getNumX(); i++) {
             for (int j = 0; j < laberinto.getNumY()[i]; j++) {
@@ -109,6 +109,6 @@ public class Main {
             }
             System.out.println();
         }
-    }
+    } */
 
 }
