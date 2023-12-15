@@ -21,7 +21,12 @@ public class Main {
         try (BufferedReader br = new BufferedReader(new FileReader(entryFile))) {
             int laberintosCount = 0;
             while (true) {
-                ArrayList<ArrayList<Cuadrado>> laberinto = new ArrayList<>();
+                Cuadrado[][] laberinto = new Cuadrado[200][200];
+                for (int i = 0; i < 200; i++) {
+                    for (int j = 0; j < 200; j++) {
+                        laberinto[i][j] = new Cuadrado(i, j);
+                    }
+                }
                 String line = br.readLine();
                 String[] sizes = line.split(" ");
                 int numParedes = Integer.parseInt(sizes[0]);
@@ -37,28 +42,16 @@ public class Main {
                     y = Integer.parseInt(pared[1]); // posición en Y
                     d = Integer.parseInt(pared[2]); // direccion (0 || 1)
                     t = Integer.parseInt(pared[3]); // longitud
-                    // Se generan los huecos en la matriz (Estos siempre estaran entre 1 y 199)
-                    xCount = 0;
-                    yCount = 0;
-                    while (laberinto.size() <= x+t) {
-                        laberinto.add(new ArrayList<>());
-                        while (laberinto.get(xCount).size() <= y+t) {
-                            laberinto.get(xCount).add(new Cuadrado(xCount, yCount));
-                            yCount++;
-                        }
-                        yCount = 0;
-                        xCount++;
-                    }
                     // Se insertan las paredes
                     if (d == 0) { // La pared esta alineada con el Eje X
                         for (int i = 0; i < t; i++) {
-                            laberinto.get(x+i).get(y-1).setTop(Cuadrado.border.PARED); // Para el cuadrado inferior
-                            laberinto.get(x+i).get(y).setBottom(Cuadrado.border.PARED); // Para el cuadrado superior
+                            laberinto[x+i][y-1].setTop(Cuadrado.border.PARED); // Para el cuadrado inferior
+                            laberinto[x+i][y].setBottom(Cuadrado.border.PARED); // Para el cuadrado superior
                         }
                     } else if (d == 1) { // La pared esta alineada con el Eje Y
                         for (int i = 0; i < t; i++) {
-                            laberinto.get(x-1).get(y+i).setRight(Cuadrado.border.PARED); // Para el cuadrado izquierdo
-                            laberinto.get(x).get(y+i).setLeft(Cuadrado.border.PARED); // Para el cuadrado derecho
+                            laberinto[x-1][y+i].setRight(Cuadrado.border.PARED); // Para el cuadrado izquierdo
+                            laberinto[x][y+i].setLeft(Cuadrado.border.PARED); // Para el cuadrado derecho
                         }
                     }
                     lineCount++;
@@ -76,13 +69,13 @@ public class Main {
                     try {
                         if (d == 0) { // La puerta esta alineada con el Eje X
                             for (int i = 0; i < t; i++) {
-                                laberinto.get(x+i).get(y-1).setTop(Cuadrado.border.PUERTA); // Para el cuadrado inferior
-                                laberinto.get(x+i).get(y).setBottom(Cuadrado.border.PUERTA); // Para el cuadrado superior
+                                laberinto[x+i][y-1].setTop(Cuadrado.border.PUERTA); // Para el cuadrado inferior
+                                laberinto[x+i][y].setBottom(Cuadrado.border.PUERTA); // Para el cuadrado superior
                             }
                         } else if (d == 1) { // La puerta esta alineada con el Eje Y
                             for (int i = 0; i < t; i++) {
-                                laberinto.get(x-1).get(y+i).setRight(Cuadrado.border.PUERTA); // Para el cuadrado izquierdo
-                                laberinto.get(x).get(y+i).setLeft(Cuadrado.border.PUERTA); // Para el cuadrado derecho
+                                laberinto[x-1][y+i].setRight(Cuadrado.border.PUERTA); // Para el cuadrado izquierdo
+                                laberinto[x][y+i].setLeft(Cuadrado.border.PUERTA); // Para el cuadrado derecho
                             }
                         }
                     } finally { // Si la puerta esta fuera de rango no nos importa pues no se pasara por ella
@@ -99,16 +92,5 @@ public class Main {
             System.out.println("Error al leer el archivo "+entryFile);
         }
     }
-
-    /* private static void draw(Laberinto laberinto) {
-        Cuadrado square;
-        for (int i = 0; i < laberinto.getNumX(); i++) {
-            for (int j = 0; j < laberinto.getNumY()[i]; j++) {
-                square = laberinto.getCuadrado(i, j);
-                System.out.print("["+square.getTop()+","+square.getRight()+","+square.getBottom()+","+square.getLeft()+"] ");
-            }
-            System.out.println();
-        }
-    } */
 
 }
